@@ -3,10 +3,15 @@ import { Tooltip, Toast, Popover } from 'bootstrap';
 import {camelCase} from 'lodash';
 
 function fetchKimiQuote(){
-    fetch("https://kimiquotes.herokuapp.com/quote")
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-
+    let quote;
+     let response = fetch("https://kimiquotes.herokuapp.com/quote")
+     .then((response) => response.json())
+     .then((data) => {
+        console.log(data);
+        quote = data.quote;
+        document.getElementById("quote-container").innerHTML = quote;
+     });
+     
 }
-
-document.getElementById("kimi-button").addEventListener("click",fetchKimiQuote);
+fetchKimiQuote();
+setInterval(fetchKimiQuote,5000);
