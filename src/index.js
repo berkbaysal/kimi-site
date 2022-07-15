@@ -9,9 +9,15 @@ function fetchKimiQuote(){
      .then((data) => {
         console.log(data);
         quote = data.quote;
-        document.getElementById("quote-container").innerHTML = quote;
+        document.getElementById("quote-box").innerHTML = quote;
      });
      
 }
+function swapQuote(){
+   const quoteBox = document.getElementById("quote-box");
+   quoteBox.classList.add("hidden");
+   setTimeout(()=>fetchKimiQuote(),1100);
+   setTimeout(()=>{quoteBox.classList.add("visible");quoteBox.classList.remove("hidden");},1300);
+}
 fetchKimiQuote();
-setInterval(fetchKimiQuote,5000);
+setInterval(swapQuote,10000);
