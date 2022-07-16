@@ -38,7 +38,6 @@ function setHeroHeight() {
    }
 
 }
-
 function calcPageDimensions() {
    const heroImage = document.getElementById("hero-image");
 
@@ -61,11 +60,9 @@ function calcPageDimensions() {
 
    return pageDimensions;
 }
-
 function convertRemToPixels(rem) {    
    return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 }
-
 function setQuoteBoxPositionAndSize() {
    const quoteBox = document.querySelector(".floating-quote");
    const quoteBoxContainer = document.querySelector("#quote-box-container");
@@ -152,7 +149,6 @@ function swapQuoteSide() {
       currentQuoteSide = "right";
    }
 }
-
 function init() {
    const pageDimensions = calcPageDimensions();
    if (pageDimensions.document.width < heroBreakpoint) {
@@ -162,7 +158,26 @@ function init() {
       currentQuoteSide = "left";
    }
 }
-
+function navLinkClicked(e){
+   document.querySelectorAll(".nav-link").forEach(item=>console.log(item.classList.remove("active")));
+   e.originalTarget.classList.add("active");
+}
+function scrollNavCheck(e){
+   const sections = document.querySelectorAll(".main-section");
+   const navLinks = document.querySelectorAll(".nav-link");
+   const currentHeights = [];
+   sections.forEach(item=>currentHeights.push(item.getBoundingClientRect().top));
+   currentHeights.forEach((item,i)=>{
+      if(currentHeights[i] < 25 && currentHeights[i+1]>0){
+         navLinks.forEach(item=> item.classList.remove("active"));
+         navLinks[i].classList.add("active");
+      }
+      else if(currentHeights[i] < 25 && i +1 === currentHeights.length ){
+         navLinks.forEach(item=> item.classList.remove("active"));
+         navLinks[i].classList.add("active");
+      }
+   })
+}
 window.addEventListener('load', (event) => {
    console.log(event);
    init();
@@ -172,4 +187,6 @@ window.addEventListener('load', (event) => {
    setInterval(swapQuote, 10000);
    window.addEventListener("resize", setHeroHeight);
    window.addEventListener("resize", setQuoteBoxPositionAndSize);
+   window.addEventListener("scroll",scrollNavCheck);
+   document.querySelector("#nav-bar").addEventListener("click",navLinkClicked);
 });
