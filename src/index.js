@@ -4,7 +4,7 @@ import { camelCase } from 'lodash';
 
 let currentQuoteSide = "left";
 const heroBreakpoint = 1200;
-const mobileHeroTopMargin = 5;
+const mobileHeroTopMargin = 2;
 
 function fetchKimiQuote() {
    let quote;
@@ -79,9 +79,22 @@ function setQuoteBoxPositionAndSize() {
       quoteBox.style.position = "unset";
       heroImage.classList.remove("h-100");
       quoteBox.style.width = "100%";
+      quoteBox.style.paddingLeft ="1rem";
+      quoteBox.style.paddingRight ="1rem";
+      quoteBox.style.paddingTop ="1rem";
       quoteBox.classList.add("d-flex","justify-content-center","align-items-center","bg-dark","text-white");
       heroImageContainer.style.marginTop = convertRemToPixels(mobileHeroTopMargin) + "px";
       quoteBox.style.height = (pageDimensions.document.height - (pageDimensions.heroImage.height + convertRemToPixels(mobileHeroTopMargin) + navbarHeight )) + "px";
+      console.log((pageDimensions.document.height - (pageDimensions.heroImage.height + convertRemToPixels(mobileHeroTopMargin) + navbarHeight )));
+      if(parseInt((pageDimensions.document.height - (pageDimensions.heroImage.height + convertRemToPixels(mobileHeroTopMargin) + navbarHeight ))) <100){
+          quoteBox.style.position = "absolute";
+          quoteBox.style.height = "100px";
+          quoteBox.style.bottom = navbarHeight + "px";
+          quoteBox.style.top = "";
+          quoteBox.style.right = "";
+          quoteBox.style.left = "";
+       }
+
       quoteBoxContainer.classList.remove("text-start");
       quoteBoxContainer.classList.remove("text-end");
       quoteBoxContainer.classList.add("text-center");
