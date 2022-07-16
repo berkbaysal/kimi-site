@@ -22,13 +22,35 @@ function swapQuote(){
 function setHeroHeight(){
    const navbarHeight = document.querySelector(".navbar").offsetHeight;
    const pageHeight = document.querySelector(".land-container").offsetHeight;
-   console.log(navbarHeight,pageHeight);
-   const heroImage = document.getElementById("hero-image");
+   const heroImage = document.getElementById("hero-image-container");
    heroImage.style.height = (pageHeight-navbarHeight) + "px";
-   console.log(heroImage.style.height);
+}
+
+function calcHeroImageDimensions(){
+   const heroImage = document.getElementById("hero-image");
+   const currentWidth = heroImage.offsetWidth;
+   const currentHeight = heroImage.offsetHeight;
+   return [currentWidth,currentHeight];
+}
+
+function setQuoteBoxPositionAndSize(){
+   const [imageWidth,imageHeight] = calcHeroImageDimensions();
+   const padding = imageWidth / 10;
+   const quoteBox = document.querySelector(".floating-quote");
+   const documentWidth = document.querySelector("body").offsetWidth;
+   const documentHeight = document.querySelector("body").offsetHeight;
+
+   quoteBox.style.width = ((documentWidth/2) - (imageWidth/2) - (2*padding)) + "px";
+   quoteBox.style.right = (padding) + "px";
+   quoteBox.style.top = (imageHeight/4) +"px";
+
+
+   console.log(quoteBox.style.right);
 }
 
 setHeroHeight();
 fetchKimiQuote();
+setQuoteBoxPositionAndSize();
 setInterval(swapQuote,10000);
 window.addEventListener("resize",setHeroHeight);
+window.addEventListener("resize",setQuoteBoxPositionAndSize);
