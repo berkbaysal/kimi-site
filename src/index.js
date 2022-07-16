@@ -19,5 +19,16 @@ function swapQuote(){
    setTimeout(()=>fetchKimiQuote(),1100);
    setTimeout(()=>{quoteBox.classList.add("visible");quoteBox.classList.remove("hidden");},1300);
 }
+function setHeroHeight(){
+   const navbarHeight = document.querySelector(".navbar").offsetHeight;
+   const pageHeight = document.querySelector(".land-container").offsetHeight;
+   console.log(navbarHeight,pageHeight);
+   const heroImage = document.getElementById("hero-image");
+   heroImage.style.height = (pageHeight-navbarHeight) + "px";
+   console.log(heroImage.style.height);
+}
+
+setHeroHeight();
 fetchKimiQuote();
 setInterval(swapQuote,10000);
+window.addEventListener("resize",setHeroHeight);
