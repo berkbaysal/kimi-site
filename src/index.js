@@ -40,7 +40,8 @@ function calcPageDimensions() {
    pageDimensions.document.width = window.innerWidth;
    pageDimensions.document.height = window.innerHeight;
    pageDimensions.document.aspectRatio = pageDimensions.document.width/pageDimensions.document.height;
-   if (pageDimensions.document.aspectRatio > 1.5){
+   pageDimensions.positioning.widthFactor = pageDimensions.heroImage.width/3;
+   if (pageDimensions.document.aspectRatio > 3){
       pageDimensions.positioning.widthFactor = pageDimensions.heroImage.width/2;
    }
    else{
@@ -54,7 +55,8 @@ function setQuoteBoxPositionAndSize() {
    const quoteBox = document.querySelector(".floating-quote");
    const pageDimensions = calcPageDimensions();
 
-   quoteBox.style.width = ((pageDimensions.document.width / 2) - (pageDimensions.heroImage.width / 4) * 2) + "px";
+   quoteBox.style.width = ((pageDimensions.document.width / 2) - (pageDimensions.heroImage.width/3)*2) + "px";
+   console.log(quoteBox.style.width);
    quoteBox.style.top = (pageDimensions.heroImage.height / 4) + "px";
    if (quoteBox.style.left == "" && quoteBox.style.right == ""){
       quoteBox.style.left = ((pageDimensions.document.width / 2) - pageDimensions.positioning.widthFactor) - quoteBox.offsetWidth + "px";
