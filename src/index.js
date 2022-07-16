@@ -2,6 +2,7 @@ import './style.scss';
 import { Tooltip, Toast, Popover } from 'bootstrap';
 import { camelCase } from 'lodash';
 
+
 function fetchKimiQuote() {
    let quote;
    let response = fetch("https://kimiquotes.herokuapp.com/quote")
