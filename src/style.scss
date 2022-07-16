@@ -1,7 +1,5 @@
 @import "~bootstrap/scss/bootstrap";
 
-.quote-box-animation {}
-
 /* Fade-In Effect */
 .visible {
     visibility: visible;
@@ -16,12 +14,40 @@
     transition: visibility 0s 1s, opacity 1s linear;
 }
 .progress-end{
-    height: 2.5rem;
-    width: 2.5rem;
+    height: 1.5rem;
+    width: 1.5rem;
     border-radius: 50%;
     background-color: $primary;
     position: relative;
     top: -0.75rem;
     left: -1.25rem;
     box-shadow: 0 0 .25rem  0.2rem rgba($black, .125);
+}
+
+.navbar{
+    position:sticky;
+    top:0;
+    z-index: 99;
+}
+
+.hero-image{
+    filter: saturate(20%);
+    position: relative;
+} 
+
+.floating-quote{
+    position: absolute;
+}
+
+.team-logo{
+    max-height: 30px;
+    filter: saturate(75%);
+}
+
+.card-img-top{
+    filter: saturate(50%);
+}
+
+.tester{
+    background-color: red;
 }
