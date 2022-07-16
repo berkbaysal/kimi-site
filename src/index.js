@@ -35,13 +35,12 @@ function calcHeroImageDimensions(){
 
 function setQuoteBoxPositionAndSize(){
    const [imageWidth,imageHeight] = calcHeroImageDimensions();
-   const padding = imageWidth / 10;
    const quoteBox = document.querySelector(".floating-quote");
    const documentWidth = document.querySelector("body").offsetWidth;
    const documentHeight = document.querySelector("body").offsetHeight;
 
-   quoteBox.style.width = ((documentWidth/2) - (imageWidth/2) - (2*padding)) + "px";
-   quoteBox.style.right = (padding) + "px";
+   quoteBox.style.width = ((documentWidth/2) - (imageWidth/4)*2) + "px";
+   quoteBox.style.left = ((documentWidth/2) - (imageWidth/3)) -quoteBox.offsetWidth + "px";
    quoteBox.style.top = (imageHeight/4) +"px";
 
 
