@@ -4,6 +4,7 @@ import { camelCase } from 'lodash';
 
 let currentQuoteSide = "left";
 const heroBreakpoint = 1200;
+const mobileHeroTopMargin = 5;
 
 function fetchKimiQuote() {
    let quote;
@@ -61,12 +62,16 @@ function calcPageDimensions() {
    return pageDimensions;
 }
 
+function convertRemToPixels(rem) {    
+   return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+}
+
 function setQuoteBoxPositionAndSize() {
    const quoteBox = document.querySelector(".floating-quote");
    const quoteBoxContainer = document.querySelector("#quote-box-container");
    const heroImage = document.getElementById("hero-image");
    const navbarHeight = document.querySelector(".navbar").offsetHeight;
-
+   const heroImageContainer = document.getElementById("hero-image-container");
 
    const pageDimensions = calcPageDimensions();
 
@@ -74,7 +79,9 @@ function setQuoteBoxPositionAndSize() {
       quoteBox.style.position = "unset";
       heroImage.classList.remove("h-100");
       quoteBox.style.width = "100%";
-      quoteBox.style.height = (pageDimensions.document.height - (pageDimensions.heroImage.height + navbarHeight )) + "px";
+      quoteBox.classList.add("d-flex","justify-content-center","align-items-center","bg-dark","text-white");
+      heroImageContainer.style.marginTop = convertRemToPixels(mobileHeroTopMargin) + "px";
+      quoteBox.style.height = (pageDimensions.document.height - (pageDimensions.heroImage.height + convertRemToPixels(mobileHeroTopMargin) + navbarHeight )) + "px";
       quoteBoxContainer.classList.remove("text-start");
       quoteBoxContainer.classList.remove("text-end");
       quoteBoxContainer.classList.add("text-center");
@@ -82,8 +89,10 @@ function setQuoteBoxPositionAndSize() {
    }
    else {
       currentQuoteSide = "right";
+      quoteBox.classList.remove("d-flex","justify-content-center","align-items-center","bg-dark","text-white");
       swapQuoteSide();
       heroImage.classList.add("h-100");
+      heroImageContainer.style.marginTop = "";
       quoteBox.style.position = "absolute";
       quoteBox.style.width = ((pageDimensions.document.width / 2) - (pageDimensions.positioning.widthFactor*1.1)) + "px";
       quoteBox.style.top = (pageDimensions.heroImage.height / 4) + "px";
