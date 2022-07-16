@@ -16,8 +16,8 @@
     transition: visibility 0s 1s, opacity 1s linear;
 }
 .progress-end{
-    height: 2.5rem;
-    width: 2.5rem;
+    height: 1.5rem;
+    width: 1.5rem;
     border-radius: 50%;
     background-color: $primary;
     position: relative;
@@ -29,6 +29,7 @@
 .navbar{
     position:sticky;
     top:0;
+    z-index: 99;
 }
 
 .hero-image{
@@ -38,4 +39,13 @@
 
 .floating-quote{
     position: absolute;
+}
+
+.team-logo{
+    max-height: 30px;
+    filter: saturate(75%);
+}
+
+.tester{
+    background-color: red;
 }
