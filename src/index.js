@@ -20,10 +20,12 @@ function swapQuote() {
    setTimeout(() => { quoteBox.classList.add("visible"); quoteBox.classList.remove("hidden"); }, 1300);
 }
 function setHeroHeight() {
+   const pageDimensions = calcPageDimensions();
    const navbarHeight = document.querySelector(".navbar").offsetHeight;
-   const pageHeight = document.querySelector(".land-container").offsetHeight;
+   const heroSection = document.querySelector(".land-container");
+   heroSection.style.height = (pageDimensions.document.height - navbarHeight) + "px";
    const heroImage = document.getElementById("hero-image-container");
-   heroImage.style.height = (pageHeight - navbarHeight) + "px";
+   heroImage.style.height = (pageDimensions.document.height - navbarHeight) + "px";
 }
 
 function calcPageDimensions() {
@@ -35,8 +37,8 @@ function calcPageDimensions() {
    pageDimensions.positioning = {};
    pageDimensions.heroImage.width = heroImage.offsetWidth;
    pageDimensions.heroImage.height = heroImage.offsetWidth;
-   pageDimensions.document.width = document.querySelector("body").offsetWidth;
-   pageDimensions.document.height = document.querySelector("body").offsetHeight;
+   pageDimensions.document.width = window.innerWidth;
+   pageDimensions.document.height = window.innerHeight;
    pageDimensions.document.aspectRatio = pageDimensions.document.width/pageDimensions.document.height;
    if (pageDimensions.document.aspectRatio > 1.5){
       pageDimensions.positioning.widthFactor = pageDimensions.heroImage.width/2;
