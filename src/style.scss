@@ -1,5 +1,5 @@
 @import "~bootstrap/scss/bootstrap";
-
+$taintedwhite: #ebebeb;
 /* Fade-In Effect */
 .visible {
     visibility: visible;
@@ -13,17 +13,10 @@
     opacity: 0;
     transition: visibility 0s 1s, opacity 1s linear;
 }
-.progress-end{
-    height: 1.5rem;
-    width: 1.5rem;
-    border-radius: 50%;
-    background-color: $primary;
-    position: relative;
-    top: -0.75rem;
-    left: -1.25rem;
-    box-shadow: 0 0 .25rem  0.2rem rgba($black, .125);
-}
 
+.land-container{
+    background-color: $taintedwhite;
+}
 .navbar{
     position:sticky;
     top:0;
@@ -51,4 +44,14 @@
 
 .tester{
     background-color: red;
+}
+.list-group{
+        .active{
+            background-color: $dark;
+            border-color: $secondary;
+        }
+}
+
+#video-main-container{
+    background-color: $taintedwhite;
 }

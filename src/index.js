@@ -7,6 +7,14 @@ const heroBreakpoint = 1200;
 const mobileHeroTopMargin = 2;
 const noImageMargin = 0;   //placeholder for imageless hero section in future.
 
+const kimiVideoIDs = [
+   '<iframe width="1280" height="720" src="https://www.youtube.com/embed/oAiGt8mUVto" title="15 Classic Kimi Moments" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+   '<iframe width="1280" height="720" src="https://www.youtube.com/embed/zlFGMK0QccI" title="BWOAH & MWOAH: The Ultimate Compilation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+   '<iframe width="1280" height="720" src="https://www.youtube.com/embed/1I_OhBKOK1s" title="Kimi Raikkonen - Best overtakes of the decade (2010 - 2019)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+   '<iframe width="1280" height="720" src="https://www.youtube.com/embed/0yofJDSATck" title="Funny Kimi Raikkonen Commercials (12 Minutes of Kimi ads)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+   '<iframe width="1280" height="720" src="https://www.youtube.com/embed/3MZKuNbI6Lo" title="Grill the Grid but its only Kimi" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+]
+
 function fetchKimiQuote() {
    let quote;
    let response = fetch("https://kimiquotes.herokuapp.com/quote")
@@ -171,6 +179,7 @@ function init() {
    }
    setHeroHeight();
    setQuoteBoxPositionAndSize(); //init. dimensions for further calculations.
+   calculateVideoPlayerHeight();
 }
 function navLinkClicked(e) {
    document.querySelectorAll(".nav-link").forEach(item => console.log(item.classList.remove("active")));
@@ -192,6 +201,27 @@ function scrollNavCheck(e) {
       }
    })
 }
+function calculateVideoPlayerHeight(){
+   const videoFrame = document.querySelector(".video-frame");
+   const videoPlayer = document.querySelector("iframe");
+   videoFrame.style.height = videoFrame.offsetWidth/16*9 + "px";
+   videoPlayer.setAttribute("height",videoFrame.offsetWidth/16*9 + "px");
+   videoPlayer.setAttribute("width",videoFrame.offsetWidth + "px");
+
+}
+function videoListClicked(e){
+   if(e.originalTarget.classList.value.includes("active")){
+      return;
+   }
+   else{
+      document.querySelectorAll(".list-group-item").forEach(item => item.classList.remove("active"));
+      e.originalTarget.classList.add("active");
+      document.querySelector(".video-frame").innerHTML = kimiVideoIDs[parseInt(e.originalTarget.id.substring(10))-1];
+      calculateVideoPlayerHeight();
+      
+   }
+  
+}
 window.addEventListener('load', (event) => {
    init();
    setHeroHeight();
@@ -200,6 +230,8 @@ window.addEventListener('load', (event) => {
    setInterval(swapQuote, 10000);
    window.addEventListener("resize", setHeroHeight);
    window.addEventListener("resize", setQuoteBoxPositionAndSize);
+   window.addEventListener("resize", calculateVideoPlayerHeight);
    window.addEventListener("scroll", scrollNavCheck);
    document.querySelector("#nav-bar").addEventListener("click", navLinkClicked);
+   document.querySelector("#video-list").addEventListener("click",videoListClicked);
 });
