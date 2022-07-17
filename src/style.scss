@@ -1,5 +1,6 @@
 @import "~bootstrap/scss/bootstrap";
 $taintedwhite: #ebebeb;
+
 /* Fade-In Effect */
 .visible {
     visibility: visible;
@@ -14,66 +15,75 @@ $taintedwhite: #ebebeb;
     transition: visibility 0s 1s, opacity 1s linear;
 }
 
-.land-container{
+.land-container {
     background-color: $taintedwhite;
 }
-.navbar{
-    position:sticky;
-    top:0;
+
+.navbar {
+    position: sticky;
+    top: 0;
     z-index: 99;
 }
 
-.hero-image{
+.hero-image {
     filter: saturate(20%);
     position: relative;
     object-fit: contain;
-} 
+}
 
-.floating-quote{
+.floating-quote {
     position: absolute;
 }
 
-.team-logo{
+.team-logo {
     max-height: 30px;
     filter: saturate(75%);
 }
 
-.card-img-top{
+.card-img-top {
     filter: saturate(50%);
 }
 
-.tester{
+.tester {
     background-color: red;
 }
-.list-group{
-        .active{
-            background-color: $dark;
-            border-color: $secondary;
-        }
+
+.list-group {
+    cursor: pointer;
+    .active {
+        background-color: $dark;
+        border-color: $secondary;
+    }
 }
 
-#video-main-container{
+#video-main-container {
     background-color: $taintedwhite;
 }
-footer{
+
+footer {
     background-color: $dark;
-    color: $text-muted;
-    .footer-cell{
-        font-size:0.75rem;
+    color: $gray-600;
+
+    .footer-cell {
+        font-size: 0.75rem;
     }
-    .footer-title{
+
+    .footer-title {
         color: $gray-500;
         line-height: 2rem;
     }
-    a{
-        color: $text-muted;
+
+    a {
+        color: $gray-600;
     }
-    a:hover{
+
+    a:hover {
         color: $gray-300;
     }
-    .svg-icon{
+
+    .svg-icon {
         height: 2rem;
-        fill: $text-muted;
+        fill: $gray-600;
         margin-top: 0.25rem;
     }
 }
