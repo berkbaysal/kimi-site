@@ -33,6 +33,7 @@
 .hero-image{
     filter: saturate(20%);
     position: relative;
+    object-fit: contain;
 } 
 
 .floating-quote{

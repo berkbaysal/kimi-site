@@ -5,6 +5,7 @@ import './style.scss';
 let currentQuoteSide = "left";
 const heroBreakpoint = 1200;
 const mobileHeroTopMargin = 2;
+const noImageMargin = 0;   //placeholder for imageless hero section in future.
 
 function fetchKimiQuote() {
    let quote;
@@ -29,43 +30,26 @@ function setHeroHeight() {
    const heroImageContainter = document.getElementById("hero-image-container");
    const heroImage = document.getElementById("hero-image");
 
-
+   //set hero sections height to viewport minus navbar
    heroSection.style.height = (pageDimensions.document.height - navbarHeight) + "px";
-   heroImageContainter.style.height = (pageDimensions.document.height - navbarHeight) + "px";
-   if(pageDimensions.document.width > pageDimensions.heroImage.width){
-      heroImage.style.height = heroImageContainter.style.height;
-   }
-   else{
-      heroImage.style.height = "auto";
-      heroImageContainter.style.height = heroImage.style.height;
-   }
-   
 
    if (pageDimensions.document.width < heroBreakpoint) {
-      pageDimensions = calcPageDimensions();
-     
-      if (pageDimensions.heroImage.height < parseInt(heroImage.style.height)){
-         heroImageContainter.style.height = pageDimensions.heroImage.height +"px";
-         heroImage.style.height = heroImageContainter.style.height;
-      }
-      if (parseInt((pageDimensions.document.height - (pageDimensions.heroImage.height + convertRemToPixels(mobileHeroTopMargin) + navbarHeight))) < 100) {
-         heroSection.style.height = (pageDimensions.document.height - navbarHeight) + "px";
-         heroImageContainter.style.height = (pageDimensions.document.height - navbarHeight - convertRemToPixels(mobileHeroTopMargin) - 100) + "px";
-         pageDimensions = calcPageDimensions();
-         if(pageDimensions.document.width > pageDimensions.heroImage.width){
-            heroImage.style.height = heroImageContainter.style.height;
-            
-         }
-         else{
-            heroImageContainter.style.height = (pageDimensions.document.height - navbarHeight - convertRemToPixels(mobileHeroTopMargin) - 100) + "px";
-            heroImage.style.height = "auto";
-            heroImageContainter.style.height = heroImage.style.height;
-            
-         }
-      }
+      //check available height for image with minimal quotebox set image container to it temporarily
+      const maxImageHeight = parseInt(heroSection.style.height) - 100 - convertRemToPixels(mobileHeroTopMargin);
+      heroImageContainter.style.height = maxImageHeight + "px";
+
+      //find maximum possible non-stretch height, set image and container to it.
+      heroImage.style.height = "auto"; //reset the height from prev value to test
+      let actualImageHeight = heroImage.offsetHeight;
+      if (maxImageHeight < actualImageHeight) { actualImageHeight = maxImageHeight; }  //if image is overflowing, set it back in.
+      heroImage.style.height = actualImageHeight + "px";
+      heroImageContainter.style.height = actualImageHeight + "px";
    }
-
-
+   else {
+      //incase of bigger screen (and floating quotes) adjust image for the entire hero section
+      heroImageContainter.style.height = heroSection.style.height;
+      heroImage.style.height = heroSection.style.height;
+   }
 
 }
 function calcPageDimensions() {
@@ -179,13 +163,14 @@ function swapQuoteSide() {
    }
 }
 function init() {
-   const pageDimensions = calcPageDimensions();
-   if (pageDimensions.document.width < heroBreakpoint) {
+   if (window.innerWidth < heroBreakpoint) {
       currentQuoteSide = "center";
    }
    else {
       currentQuoteSide = "left";
    }
+   setHeroHeight();
+   setQuoteBoxPositionAndSize(); //init. dimensions for further calculations.
 }
 function navLinkClicked(e) {
    document.querySelectorAll(".nav-link").forEach(item => console.log(item.classList.remove("active")));
