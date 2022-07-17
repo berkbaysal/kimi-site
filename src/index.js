@@ -1,6 +1,6 @@
 import './style.scss';
 import { Tooltip, Toast, Popover } from 'bootstrap';
-import { camelCase } from 'lodash';
+import './style.scss';
 
 let currentQuoteSide = "left";
 const heroBreakpoint = 1200;
