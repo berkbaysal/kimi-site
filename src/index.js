@@ -23,18 +23,25 @@ function swapQuote() {
    setTimeout(() => { quoteBox.classList.add("visible"); quoteBox.classList.remove("hidden"); }, 1300);
 }
 function setHeroHeight() {
-   const pageDimensions = calcPageDimensions();
+   let pageDimensions = calcPageDimensions();
    const navbarHeight = document.querySelector(".navbar").offsetHeight;
    const heroSection = document.querySelector(".land-container");
    const heroImage = document.getElementById("hero-image-container");
 
-   if (pageDimensions.document.width > heroBreakpoint) {
-      heroSection.style.height = (pageDimensions.document.height - navbarHeight) + "px";
-      heroImage.style.height = (pageDimensions.document.height - navbarHeight) + "px";
-   }
-   else {
-      heroSection.style.height = (pageDimensions.document.height - navbarHeight) + "px";
-      heroImage.style.height = (pageDimensions.heroImage.height) + "px";
+
+   heroSection.style.height = (pageDimensions.document.height - navbarHeight) + "px";
+   heroImage.style.height = (pageDimensions.document.height - navbarHeight) + "px";
+
+   if (pageDimensions.document.width < heroBreakpoint) {
+      pageDimensions = calcPageDimensions();
+      console.log(heroSection.style.height, heroImage.style.height, pageDimensions.heroImage.height)
+      if (pageDimensions.heroImage.height < parseInt(heroImage.style.height)){
+         heroImage.style.height = pageDimensions.heroImage.height +"px";
+      }
+      if (parseInt((pageDimensions.document.height - (pageDimensions.heroImage.height + convertRemToPixels(mobileHeroTopMargin) + navbarHeight))) < 100) {
+         heroSection.style.height = (pageDimensions.document.height - navbarHeight) + "px";
+         heroImage.style.height = (pageDimensions.document.height - navbarHeight - convertRemToPixels(mobileHeroTopMargin) - 100) + "px";
+      }
    }
 
 }
@@ -60,7 +67,7 @@ function calcPageDimensions() {
 
    return pageDimensions;
 }
-function convertRemToPixels(rem) {    
+function convertRemToPixels(rem) {
    return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 }
 function setQuoteBoxPositionAndSize() {
@@ -74,23 +81,22 @@ function setQuoteBoxPositionAndSize() {
 
    if (pageDimensions.document.width < heroBreakpoint) {
       quoteBox.style.position = "unset";
-      heroImage.classList.remove("h-100");
       quoteBox.style.width = "100%";
-      quoteBox.style.paddingLeft ="1rem";
-      quoteBox.style.paddingRight ="1rem";
-      quoteBox.style.paddingTop ="1rem";
-      quoteBox.classList.add("d-flex","justify-content-center","align-items-center","bg-dark","text-white");
+      quoteBox.style.paddingLeft = "1rem";
+      quoteBox.style.paddingRight = "1rem";
+      quoteBox.style.paddingTop = "1rem";
+      quoteBox.classList.add("d-flex", "justify-content-center", "align-items-center", "bg-dark", "text-white");
+      heroImage.classList.remove("h-100");
       heroImageContainer.style.marginTop = convertRemToPixels(mobileHeroTopMargin) + "px";
-      quoteBox.style.height = (pageDimensions.document.height - (pageDimensions.heroImage.height + convertRemToPixels(mobileHeroTopMargin) + navbarHeight )) + "px";
-      console.log((pageDimensions.document.height - (pageDimensions.heroImage.height + convertRemToPixels(mobileHeroTopMargin) + navbarHeight )));
-      if(parseInt((pageDimensions.document.height - (pageDimensions.heroImage.height + convertRemToPixels(mobileHeroTopMargin) + navbarHeight ))) <100){
-          quoteBox.style.position = "absolute";
-          quoteBox.style.height = "100px";
-          quoteBox.style.bottom = navbarHeight + "px";
-          quoteBox.style.top = "";
-          quoteBox.style.right = "";
-          quoteBox.style.left = "";
-       }
+      quoteBox.style.height = (pageDimensions.document.height - (pageDimensions.heroImage.height + convertRemToPixels(mobileHeroTopMargin) + navbarHeight)) + "px";
+      if (parseInt((pageDimensions.document.height - (pageDimensions.heroImage.height + convertRemToPixels(mobileHeroTopMargin) + navbarHeight))) < 100) {
+         quoteBox.style.position = "absolute";
+         quoteBox.style.height = "100px";
+         quoteBox.style.bottom = navbarHeight + "px";
+         quoteBox.style.top = "";
+         quoteBox.style.right = "";
+         quoteBox.style.left = "";
+      }
 
       quoteBoxContainer.classList.remove("text-start");
       quoteBoxContainer.classList.remove("text-end");
@@ -99,12 +105,12 @@ function setQuoteBoxPositionAndSize() {
    }
    else {
       currentQuoteSide = "right";
-      quoteBox.classList.remove("d-flex","justify-content-center","align-items-center","bg-dark","text-white");
-      swapQuoteSide();
+      quoteBox.classList.remove("d-flex", "justify-content-center", "align-items-center", "bg-dark", "text-white");
       heroImage.classList.add("h-100");
+      swapQuoteSide();
       heroImageContainer.style.marginTop = "";
       quoteBox.style.position = "absolute";
-      quoteBox.style.width = ((pageDimensions.document.width / 2) - (pageDimensions.positioning.widthFactor*1.1)) + "px";
+      quoteBox.style.width = ((pageDimensions.document.width / 2) - (pageDimensions.positioning.widthFactor * 1.1)) + "px";
       quoteBox.style.top = (pageDimensions.heroImage.height / 4) + "px";
       if (quoteBox.style.left == "" && quoteBox.style.right == "") {
          quoteBox.style.left = ((pageDimensions.document.width / 2) - pageDimensions.positioning.widthFactor) - quoteBox.offsetWidth + "px";
@@ -158,28 +164,27 @@ function init() {
       currentQuoteSide = "left";
    }
 }
-function navLinkClicked(e){
-   document.querySelectorAll(".nav-link").forEach(item=>console.log(item.classList.remove("active")));
+function navLinkClicked(e) {
+   document.querySelectorAll(".nav-link").forEach(item => console.log(item.classList.remove("active")));
    e.originalTarget.classList.add("active");
 }
-function scrollNavCheck(e){
+function scrollNavCheck(e) {
    const sections = document.querySelectorAll(".main-section");
    const navLinks = document.querySelectorAll(".nav-link");
    const currentHeights = [];
-   sections.forEach(item=>currentHeights.push(item.getBoundingClientRect().top));
-   currentHeights.forEach((item,i)=>{
-      if(currentHeights[i] < 25 && currentHeights[i+1]>0){
-         navLinks.forEach(item=> item.classList.remove("active"));
+   sections.forEach(item => currentHeights.push(item.getBoundingClientRect().top));
+   currentHeights.forEach((item, i) => {
+      if (currentHeights[i] < 25 && currentHeights[i + 1] > 0) {
+         navLinks.forEach(item => item.classList.remove("active"));
          navLinks[i].classList.add("active");
       }
-      else if(currentHeights[i] < 25 && i +1 === currentHeights.length ){
-         navLinks.forEach(item=> item.classList.remove("active"));
+      else if (currentHeights[i] < 25 && i + 1 === currentHeights.length) {
+         navLinks.forEach(item => item.classList.remove("active"));
          navLinks[i].classList.add("active");
       }
    })
 }
 window.addEventListener('load', (event) => {
-   console.log(event);
    init();
    setHeroHeight();
    fetchKimiQuote();
@@ -187,6 +192,6 @@ window.addEventListener('load', (event) => {
    setInterval(swapQuote, 10000);
    window.addEventListener("resize", setHeroHeight);
    window.addEventListener("resize", setQuoteBoxPositionAndSize);
-   window.addEventListener("scroll",scrollNavCheck);
-   document.querySelector("#nav-bar").addEventListener("click",navLinkClicked);
+   window.addEventListener("scroll", scrollNavCheck);
+   document.querySelector("#nav-bar").addEventListener("click", navLinkClicked);
 });
