@@ -55,3 +55,25 @@ $taintedwhite: #ebebeb;
 #video-main-container{
     background-color: $taintedwhite;
 }
+footer{
+    background-color: $dark;
+    color: $text-muted;
+    .footer-cell{
+        font-size:0.75rem;
+    }
+    .footer-title{
+        color: $gray-500;
+        line-height: 2rem;
+    }
+    a{
+        color: $text-muted;
+    }
+    a:hover{
+        color: $gray-300;
+    }
+    .svg-icon{
+        height: 2rem;
+        fill: $text-muted;
+        margin-top: 0.25rem;
+    }
+}
