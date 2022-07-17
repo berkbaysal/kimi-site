@@ -26,23 +26,46 @@ function setHeroHeight() {
    let pageDimensions = calcPageDimensions();
    const navbarHeight = document.querySelector(".navbar").offsetHeight;
    const heroSection = document.querySelector(".land-container");
-   const heroImage = document.getElementById("hero-image-container");
+   const heroImageContainter = document.getElementById("hero-image-container");
+   const heroImage = document.getElementById("hero-image");
 
 
    heroSection.style.height = (pageDimensions.document.height - navbarHeight) + "px";
-   heroImage.style.height = (pageDimensions.document.height - navbarHeight) + "px";
+   heroImageContainter.style.height = (pageDimensions.document.height - navbarHeight) + "px";
+   if(pageDimensions.document.width > pageDimensions.heroImage.width){
+      heroImage.style.height = heroImageContainter.style.height;
+   }
+   else{
+      heroImage.style.height = "auto";
+      heroImageContainter.style.height = heroImage.style.height;
+   }
+   
 
    if (pageDimensions.document.width < heroBreakpoint) {
       pageDimensions = calcPageDimensions();
-      console.log(heroSection.style.height, heroImage.style.height, pageDimensions.heroImage.height)
+     
       if (pageDimensions.heroImage.height < parseInt(heroImage.style.height)){
-         heroImage.style.height = pageDimensions.heroImage.height +"px";
+         heroImageContainter.style.height = pageDimensions.heroImage.height +"px";
+         heroImage.style.height = heroImageContainter.style.height;
       }
       if (parseInt((pageDimensions.document.height - (pageDimensions.heroImage.height + convertRemToPixels(mobileHeroTopMargin) + navbarHeight))) < 100) {
          heroSection.style.height = (pageDimensions.document.height - navbarHeight) + "px";
-         heroImage.style.height = (pageDimensions.document.height - navbarHeight - convertRemToPixels(mobileHeroTopMargin) - 100) + "px";
+         heroImageContainter.style.height = (pageDimensions.document.height - navbarHeight - convertRemToPixels(mobileHeroTopMargin) - 100) + "px";
+         pageDimensions = calcPageDimensions();
+         if(pageDimensions.document.width > pageDimensions.heroImage.width){
+            heroImage.style.height = heroImageContainter.style.height;
+            
+         }
+         else{
+            heroImageContainter.style.height = (pageDimensions.document.height - navbarHeight - convertRemToPixels(mobileHeroTopMargin) - 100) + "px";
+            heroImage.style.height = "auto";
+            heroImageContainter.style.height = heroImage.style.height;
+            
+         }
       }
    }
+
+
 
 }
 function calcPageDimensions() {
@@ -84,7 +107,7 @@ function setQuoteBoxPositionAndSize() {
       quoteBox.style.width = "100%";
       quoteBox.style.paddingLeft = "1rem";
       quoteBox.style.paddingRight = "1rem";
-      quoteBox.style.paddingTop = "1rem";
+      quoteBox.style.paddingTop = "2rem";
       quoteBox.classList.add("d-flex", "justify-content-center", "align-items-center", "bg-dark", "text-white");
       heroImage.classList.remove("h-100");
       heroImageContainer.style.marginTop = convertRemToPixels(mobileHeroTopMargin) + "px";
