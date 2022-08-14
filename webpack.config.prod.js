@@ -7,6 +7,8 @@ module.exports = {
     entry: path.resolve(__dirname,"src/index.js"),
     output: {
         filename: "main.js",
+        clean: true,
+        publicPath: "./"
     },
     module: {
         rules: [
@@ -32,7 +34,7 @@ module.exports = {
             ]
         }),
         new HtmlWebpackPlugin({
-            filename: "./public/index.html",
+            filename: "./index.html",
             template: "./public/index.html",
         }
         )

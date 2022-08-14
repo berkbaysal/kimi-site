@@ -210,13 +210,14 @@ function calculateVideoPlayerHeight(){
 
 }
 function videoListClicked(e){
-   if(e.originalTarget.classList.value.includes("active")){
+   console.log(e)
+   if(e.srcElement.classList.value.includes("active")){
       return;
    }
    else{
       document.querySelectorAll(".list-group-item").forEach(item => item.classList.remove("active"));
-      e.originalTarget.classList.add("active");
-      document.querySelector(".video-frame").innerHTML = kimiVideoIDs[parseInt(e.originalTarget.id.substring(10))-1];
+      e.srcElement.classList.add("active");
+      document.querySelector(".video-frame").innerHTML = kimiVideoIDs[parseInt(e.srcElement.id.substring(10))-1];
       calculateVideoPlayerHeight();
       
    }
